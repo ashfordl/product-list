@@ -28,10 +28,5 @@ namespace ProductList.Models
 
         [ManyToOne]
         public Category Category { get; set; }
-
-        public Product(SQLiteConnection con) : base(con)
-        {
-            // Do nothing
-        }
     }
 }

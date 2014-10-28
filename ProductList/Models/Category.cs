@@ -20,9 +20,9 @@ namespace ProductList.Models
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Product> Products { get; set; }
 
-        public Category(SQLiteConnection con) : base(con)
+        public static IEnumerable<Category> SelectAll(SQLiteConnection con)
         {
-            // Do nothing
+            return con.Table<Category>();
         }
     }
 }

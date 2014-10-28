@@ -9,26 +9,14 @@ namespace ProductList.Models
 {
     public abstract class Model
     {
-        public SQLiteConnection DatabaseConnection { get; protected set; }
-
-        public Model(SQLiteConnection database)
+        public static void Save(SQLiteConnection con, Model m)
         {
-            if (database == null)
-            {
-                throw new ArgumentNullException("Argument 0 may not be null.");
-            }
-
-            DatabaseConnection = database;
+            con.Insert(m);
         }
 
-        public void Save()
+        public static void Delete(SQLiteConnection con, Model m)
         {
-            DatabaseConnection.Insert(this);
-        }
-
-        public void Delete()
-        {
-            DatabaseConnection.Delete(this);
+            con.Delete(m);
         }
     }
 }
