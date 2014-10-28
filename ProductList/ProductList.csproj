@@ -74,6 +74,7 @@
     <Compile Include="Database\DatabaseConnection.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Converters\IntegerPriceConverter.cs" />
+    <Compile Include="Models\Converters\LinkStringVisibilityConverter.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Product.cs" />
     <Page Include="MainWindow.xaml">

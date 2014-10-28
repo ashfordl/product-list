@@ -1,17 +1,51 @@
 ﻿<Window x:Class="ProductList.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ProductList"
+        xmlns:model="clr-namespace:ProductList.Models"
+        xmlns:converter="clr-namespace:ProductList.Models.Converters"
         Title="Product List" Height="350" Width="525">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="NewCommand_Executed" CanExecute="NewCommand_CanExecute"/>
         <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommand_Executed" CanExecute="OpenCommand_CanExecute" />
+        <CommandBinding Command="NavigationCommands.GoToPage" Executed="NavigateUri_Executed" CanExecute="NavigateUri_CanExecute" />
     </Window.CommandBindings>
+    <Window.Resources>
+        <converter:IntegerPriceConverter x:Key="PriceConverter" />
+        <converter:LinkStringVisibilityConverter x:Key="LinkVisiblity" />
+
+        <DataTemplate DataType="{x:Type model:Category}">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="{Binding Path=Name}" Margin="5 0"/>
+                <ListView ItemsSource="{Binding Path=Products}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type model:Product}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=Name}" Margin="5 0"/>
+                <TextBlock Text="{Binding Path=Price, Converter={StaticResource PriceConverter}}" Margin="5 0"/>
+                <TextBlock Visibility="{Binding Source=Link, Converter={StaticResource LinkVisiblity}}" Margin="5 0">
+                    <Hyperlink NavigateUri="{Binding Path=Link}">Link...</Hyperlink>
+                </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+
+        </Grid.ColumnDefinitions>
         <Menu IsMainMenu="True">
             <MenuItem Header="_File">
                 <MenuItem Name="FileNew" Header="_New" Command="ApplicationCommands.New"/>
                 <MenuItem Name="FileOpen" Header="_Open" Command="ApplicationCommands.Open"/>
             </MenuItem>
         </Menu>
+
+        
     </Grid>
 </Window>

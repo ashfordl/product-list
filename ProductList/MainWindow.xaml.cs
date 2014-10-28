@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ProductList.Database;
+using System.Diagnostics;
 
 namespace ProductList
 {
@@ -84,6 +85,18 @@ namespace ProductList
                                     MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void NavigateUri_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void NavigateUri_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var send = (Hyperlink)sender;
+
+            Process.Start(send.NavigateUri.ToString());
         }
     }
 }
