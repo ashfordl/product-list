@@ -28,5 +28,10 @@ namespace ProductList.Models
 
         [ManyToOne]
         public Category Category { get; set; }
+
+        public static IEnumerable<Product> SelectAllWhereNoCategory(SQLiteConnection con)
+        {
+            return con.Table<Product>().Where(p => p.CategoryId == null);
+        }
     }
 }

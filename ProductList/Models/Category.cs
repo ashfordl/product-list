@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite.Net.Attributes;
+using SQLiteNetExtensions;
+using SQLiteNetExtensions.Extensions;
 using SQLiteNetExtensions.Attributes;
 using SQLite.Net;
 
@@ -22,7 +24,14 @@ namespace ProductList.Models
 
         public static IEnumerable<Category> SelectAll(SQLiteConnection con)
         {
-            return con.Table<Category>();
+            List<Category> category = new List<Category>();
+
+            foreach(var cat in con.Table<Category>())
+            {
+                category.Add(con.GetWithChildren<Category>(cat.Id));
+            }
+
+            return category;
         }
     }
 }
