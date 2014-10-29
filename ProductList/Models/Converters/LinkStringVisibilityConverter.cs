@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace ProductList.Models.Converters
@@ -19,9 +20,9 @@ namespace ProductList.Models.Converters
         {
             string link = (string)value;
 
-            // TODO Validate as a link
+            // TODO Validate link as URL
 
-            return String.IsNullOrWhiteSpace(link);
+            return String.IsNullOrWhiteSpace(link) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
