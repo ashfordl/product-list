@@ -20,5 +20,10 @@ namespace ProductList.Database
 
             return db;
         }
+
+        public static SQLiteConnection Connect(string path)
+        {
+            return new SQLiteConnection(new SQLitePlatformGeneric(), path);
+        }
     }
 }
