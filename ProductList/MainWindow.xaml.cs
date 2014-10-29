@@ -118,9 +118,9 @@ namespace ProductList
 
         private void NavigateUri_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var send = (Hyperlink)sender;
+            string uri = (string)e.Parameter;
 
-            Process.Start(send.NavigateUri.ToString());
+            Process.Start(uri);
         }
     }
 }

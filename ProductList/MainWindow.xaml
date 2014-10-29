@@ -25,8 +25,8 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Path=Name}" Margin="5 0"/>
                 <TextBlock Text="{Binding Path=Price, Converter={StaticResource PriceConverter}}" Margin="5 0"/>
-                <TextBlock Visibility="{Binding Source=Link, Converter={StaticResource LinkVisiblity}}" Margin="5 0">
-                    <Hyperlink NavigateUri="{Binding Path=Link}">Link...</Hyperlink>
+                <TextBlock Visibility="{Binding Path=Link, Converter={StaticResource LinkVisiblity}}" Margin="5 0">
+                    <Hyperlink CommandParameter="{Binding Path=Link}" Command="NavigationCommands.GoToPage">Link...</Hyperlink>
                 </TextBlock>
             </StackPanel>
         </DataTemplate>
