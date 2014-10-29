@@ -46,6 +46,6 @@
             </MenuItem>
         </Menu>
 
-        
+        <ListView Name="products" Grid.Row="1"/>
     </Grid>
 </Window>

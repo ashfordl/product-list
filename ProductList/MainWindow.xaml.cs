@@ -13,8 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ProductList.Database;
 using System.Diagnostics;
+using ProductList.Database;
+using ProductList.Models;
+using SQLite.Net;
 
 namespace ProductList
 {
@@ -26,6 +28,29 @@ namespace ProductList
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private bool AttemptLoadDatabase(string filepath, SQLiteConnection connection = null)
+        {
+            try
+            {
+                SQLiteConnection con = connection ?? DatabaseConnection.Connect(filepath);
+
+                // Select all categories, with their products
+                var categories = Category.SelectAll(con).ToList();
+
+                // Create a pseudo-category for products with no actual category
+                Category psuedo = new Category() { Name = "No category", Products = Product.SelectAllWhereNoCategory(con).ToList() };
+                categories.Add(psuedo);
+
+                products.ItemsSource = categories;
+            }
+            catch (SQLiteException sqlex)
+            {
+                return false;
+            }
+            
+            return true;
         }
 
         private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -44,7 +69,6 @@ namespace ProductList
             {
                 try
                 {
-                    // DatabaseOperations.CreateDatabase(dialog.FileName);
                     DatabaseConnection.CreateDatabase(dialog.FileName);
                 }
                 catch (Exception ex) // In case anything went wrong
@@ -75,7 +99,7 @@ namespace ProductList
             {
                 try
                 {
-                    // TODO Load file
+                    AttemptLoadDatabase(dialog.FileName);
                 }
                 catch (Exception ex) // In case anything went wrong
                 {
