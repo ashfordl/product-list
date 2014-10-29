@@ -18,7 +18,12 @@ namespace ProductList.Models.Converters
         /// <returns>A string of the price in pounds.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double val = (double)value / 100;
+            if (value == null)
+            {
+                return "";
+            }
+
+            double val = (double)(int)value / 100;
             return "£" + val.ToString();
         }
 
@@ -29,6 +34,11 @@ namespace ProductList.Models.Converters
         /// <returns>The price integer in pennies.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null || String.IsNullOrWhiteSpace((string)value))
+            {
+                return null;
+            }
+
             // Remove £ symbol
             string val = (string)value;
 
