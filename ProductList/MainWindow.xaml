@@ -15,17 +15,17 @@
         <converter:LinkStringVisibilityConverter x:Key="LinkVisiblity" />
 
         <DataTemplate DataType="{x:Type model:Category}">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{Binding Path=Name}" Margin="5 0"/>
-                <ListView ItemsSource="{Binding Path=Products}" />
+            <StackPanel Orientation="Vertical" Margin="5">
+                <TextBlock Text="{Binding Path=Name}" FontFamily="Segoe UI Semibold" FontSize="12"/>
+                <ListView ItemsSource="{Binding Path=Products}" BorderThickness="0"/>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type model:Product}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Path=Name}" Margin="5 0"/>
-                <TextBlock Text="{Binding Path=Price, Converter={StaticResource PriceConverter}}" Margin="5 0"/>
-                <TextBlock Visibility="{Binding Path=Link, Converter={StaticResource LinkVisiblity}}" Margin="5 0">
+                <TextBlock Text="{Binding Path=Name}" Margin="0,0,10,0"/>
+                <TextBlock Text="{Binding Path=Price, Converter={StaticResource PriceConverter}}" Margin="10 0"/>
+                <TextBlock Visibility="{Binding Path=Link, Converter={StaticResource LinkVisiblity}}" Margin="10 0">
                     <Hyperlink CommandParameter="{Binding Path=Link}" Command="NavigationCommands.GoToPage">Link...</Hyperlink>
                 </TextBlock>
             </StackPanel>
@@ -46,6 +46,6 @@
             </MenuItem>
         </Menu>
 
-        <ListView Name="products" Grid.Row="1"/>
+        <ItemsControl Name="products" Grid.Row="1" BorderThickness="0"/>
     </Grid>
 </Window>

@@ -87,7 +87,7 @@ namespace ProductList
                 {
                     AttemptLoadDatabase(dialog.FileName);
                 }
-                catch (Exception ex) // In case anything went wrong
+                catch (Exception) // In case anything went wrong
                 {
                     MessageBox.Show("An error occurred and the list was not created.",
                                     "Error",
@@ -106,6 +106,10 @@ namespace ProductList
         {
             string uri = (string)e.Parameter;
 
+            // TODO Validate uri as a URI.
+            // Could be a security vulnerability as it could launch any application
+
+            // Opens the default browser
             Process.Start(uri);
         }
     }
