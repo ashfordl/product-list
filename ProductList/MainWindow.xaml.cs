@@ -1,18 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Diagnostics;
 using ProductList.Database;
 using ProductList.Models;
@@ -30,27 +20,23 @@ namespace ProductList
             InitializeComponent();
         }
 
-        private bool AttemptLoadDatabase(string filepath, SQLiteConnection connection = null)
+        /// <summary>
+        /// Loads the database to the GUI.
+        /// </summary>
+        /// <param name="filepath">The path of the database file.</param>
+        /// <param name="connection">An optional existing SQLiteConnection to use. This will override the filepath.</param>
+        private void AttemptLoadDatabase(string filepath, SQLiteConnection connection = null)
         {
-            try
-            {
-                SQLiteConnection con = connection ?? DatabaseConnection.Connect(filepath);
+            SQLiteConnection con = connection ?? DatabaseConnection.Connect(filepath);
 
-                // Select all categories, with their products
-                var categories = Category.SelectAll(con).ToList();
+            // Select all categories, with their products
+            var categories = Category.SelectAll(con).ToList();
 
-                // Create a pseudo-category for products with no actual category
-                Category psuedo = new Category() { Name = "No category", Products = Product.SelectAllWhereNoCategory(con).ToList() };
-                categories.Add(psuedo);
+            // Create a pseudo-category for products with no actual category
+            Category psuedo = new Category() { Name = "No category", Products = Product.SelectAllWhereNoCategory(con).ToList() };
+            categories.Add(psuedo);
 
-                products.ItemsSource = categories;
-            }
-            catch (SQLiteException sqlex)
-            {
-                return false;
-            }
-            
-            return true;
+            products.ItemsSource = categories;
         }
 
         private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
