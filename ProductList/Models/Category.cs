@@ -22,16 +22,15 @@ namespace ProductList.Models
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Product> Products { get; set; }
 
-        public static IEnumerable<Category> SelectAll(SQLiteConnection con)
+        public static IEnumerable<Category> SelectAllWithChildren(SQLiteConnection con)
         {
-            List<Category> category = new List<Category>();
+            // Select the children also
+            var cats = con.GetAllWithChildren<Category>();
 
-            foreach(var cat in con.Table<Category>())
-            {
-                category.Add(con.GetWithChildren<Category>(cat.Id));
-            }
+            // Remove categories that do not have products
+            cats.RemoveAll(category => category.Products.Count == 0);
 
-            return category;
+            return cats;
         }
     }
 }

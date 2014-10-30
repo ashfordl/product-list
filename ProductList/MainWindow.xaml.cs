@@ -30,7 +30,7 @@ namespace ProductList
             SQLiteConnection con = connection ?? DatabaseConnection.Connect(filepath);
 
             // Select all categories, with their products
-            var categories = Category.SelectAll(con).ToList();
+            var categories = Category.SelectAllWithChildren(con).ToList();
 
             // Create a pseudo-category for products with no actual category
             Category psuedo = new Category() { Name = "No category", Products = Product.SelectAllWhereNoCategory(con).ToList() };
